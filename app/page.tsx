@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
@@ -11,8 +13,10 @@ export default function Home() {
             <p className="text-lg">Track your job applications</p>
           
           <div>
-            <button>Start for Free</button>
-            <p>Free forever, no creadit card requared</p>
+            <Button size="lg" className="text-lg font-bold">
+              Start for Free <ArrowRight className="ml-2"/>
+            </Button>
+            <p className="text-sm text-muted-foreground">Free forever, no creadit card requared</p>
           </div>
           </div>
         </section>
