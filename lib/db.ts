@@ -13,11 +13,11 @@ declare global{
 
 }
 
-let cache: MongoooseCache = global.mongoose || {conn:null, promise:null};
+let cached: MongoooseCache = global.mongoose || {conn:null, promise:null};
 
 if (!global.mongoose) {
     
-    global.mongoose=cache;
+    global.mongoose=cached;
 }
 
 async function connectDB() {
@@ -25,22 +25,22 @@ async function connectDB() {
     throw new Error("Please add your MongoDB URI to .env.local");
 }
 
-    if (cache.conn) {
-        return cache.conn;
+    if (cached.conn) {
+        return cached.conn;
     }
-    if (!cache.promise) {
+    if (!cached.promise) {
         const opts={
             bufferCommands:false,
         }
-        cache.promise=mongoose.connect(MONGODB_URI,opts).then((mongoose)=>mongoose);
+        cached.promise=mongoose.connect(MONGODB_URI,opts).then((mongoose)=>mongoose);
     }
     try {
-        cache.conn=await cache.promise;
+        cached.conn=await cached.promise;
     } catch (error) {
-        cache.promise=null;
+        cached.promise=null;
         throw error;
     }
-    return cache.conn;
+    return cached.conn;
 }
 
 export default connectDB;
